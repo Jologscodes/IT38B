@@ -75,11 +75,22 @@
             
             if (username === "admin" && password === "password123") {
                 alert("Login successful!");
-                window.location.href = "admin-dashboard.html"; // Redirect to admin dashboard
+    
+                // Store login history in localStorage
+                let loginHistory = JSON.parse(localStorage.getItem("loginHistory")) || [];
+                loginHistory.push({
+                    username: username,
+                    timestamp: new Date().toLocaleString()
+                });
+                localStorage.setItem("loginHistory", JSON.stringify(loginHistory));
+    
+                // Redirect to admin dashboard
+                window.location.href = "admin-dashboard.html";
             } else {
                 alert("Invalid credentials. Try again.");
             }
         });
     </script>
+    
 </body>
 </html>

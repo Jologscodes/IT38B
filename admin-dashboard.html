@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .dashboard-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+        .logout-btn {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .logout-btn:hover {
+            background-color: #b71c1c;
+        }
+        table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #1976d2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h2>Admin Dashboard</h2>
+        <h3>Login History</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Login Time</th>
+                </tr>
+            </thead>
+            <tbody id="historyTable">
+                <!-- Login history will be inserted here -->
+            </tbody>
+        </table>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // Function to load login history
+        function loadLoginHistory() {
+            let history = JSON.parse(localStorage.getItem("loginHistory")) || [];
+            let historyTable = document.getElementById("historyTable");
+    
+            historyTable.innerHTML = ""; // Clear existing content
+            history.forEach(entry => {
+                let row = `<tr>
+                    <td>${entry.username}</td>
+                    <td>${entry.timestamp}</td>
+                </tr>`;
+                historyTable.innerHTML += row;
+            });
+        }
+    
+        // Logout function
+        function logout() {
+            window.location.href = "index.html"; // Redirect to login page
+        }
+    
+        // Load login history on page load
+        window.onload = loadLoginHistory;
+    </script>
+    
+
+</body>
+</html>
