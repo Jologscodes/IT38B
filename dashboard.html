@@ -53,9 +53,9 @@
     </style>
 </head>
 <body>
-
     <div class="dashboard-container">
         <h2>Admin Dashboard</h2>
+        <h3>Welcome, <span id="currentUser"></span></h3>
         <h3>Login History</h3>
         <table>
             <thead>
@@ -65,19 +65,19 @@
                 </tr>
             </thead>
             <tbody id="historyTable">
-                
             </tbody>
         </table>
         <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 
     <script>
-        
         function loadLoginHistory() {
             let history = JSON.parse(localStorage.getItem("loginHistory")) || [];
             let historyTable = document.getElementById("historyTable");
-    
-            historyTable.innerHTML = ""; 
+            let currentUser = localStorage.getItem("currentUser") || "Unknown User";
+            
+            document.getElementById("currentUser").textContent = currentUser;
+            historyTable.innerHTML = "";
             history.forEach(entry => {
                 let row = `<tr>
                     <td>${entry.username}</td>
@@ -87,15 +87,12 @@
             });
         }
     
- 
         function logout() {
+            localStorage.removeItem("currentUser");
             window.location.href = "index.html";
         }
     
-      
         window.onload = loadLoginHistory;
     </script>
-    
-
 </body>
 </html>

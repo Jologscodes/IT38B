@@ -49,12 +49,12 @@
             justify-content: center;
             align-items: center;
             box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-            overflow: hidden; /* Ensure the image stays within the circle */
+            overflow: hidden; 
         }
         .circle img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensure the image covers the circle */
+            object-fit: cover; 
         }
         .login-box {
             flex: 1;
@@ -113,14 +113,38 @@
             </div>
             <div class="login-box">
                 <h2>LOGIN</h2>
-                <form>
-                    <input type="text" placeholder="Username" required>
-                    <input type="password" placeholder="Password" required>
+                <form onsubmit="return loginUser(event)">
+                    <input type="text" id="username" placeholder="Username" required>
+                    <input type="password" id="password" placeholder="Password" required>
                     <button type="submit">LOG IN</button>
                 </form>
                 <p>Don't have an account? <a href="#">Register here</a></p>
             </div>
-        </div>
-    </div>
-</body>
-</html>
+            
+            <script>
+                function loginUser(event) {
+                    event.preventDefault(); 
+            
+                    let username = document.getElementById("username").value;
+                    let password = document.getElementById("password").value;
+            
+                    if (username.trim() === "" || password.trim() === "") {
+                        alert("Please enter a valid username and password.");
+                        return false;
+                    }
+            
+                    
+                    let loginHistory = JSON.parse(localStorage.getItem("loginHistory")) || [];
+                    let loginEntry = { username: username, timestamp: new Date().toLocaleString() };
+                    loginHistory.push(loginEntry);
+                    localStorage.setItem("loginHistory", JSON.stringify(loginHistory));
+            
+                    
+                    localStorage.setItem("currentUser", username);
+            
+                    
+                    window.location.href = "dashboard.html";
+                    return false;
+                }
+            </script>
+            
