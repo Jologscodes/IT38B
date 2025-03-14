@@ -65,19 +65,19 @@
                 </tr>
             </thead>
             <tbody id="historyTable">
-                <!-- Login history will be inserted here -->
+                
             </tbody>
         </table>
         <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 
     <script>
-        // Function to load login history
+        
         function loadLoginHistory() {
             let history = JSON.parse(localStorage.getItem("loginHistory")) || [];
             let historyTable = document.getElementById("historyTable");
     
-            historyTable.innerHTML = ""; // Clear existing content
+            historyTable.innerHTML = ""; 
             history.forEach(entry => {
                 let row = `<tr>
                     <td>${entry.username}</td>
@@ -87,12 +87,12 @@
             });
         }
     
-        // Logout function
+ 
         function logout() {
-            window.location.href = "index.html"; // Redirect to login page
+            window.location.href = "index.html";
         }
     
-        // Load login history on page load
+      
         window.onload = loadLoginHistory;
     </script>
     
