@@ -23,18 +23,26 @@
             width: 400px;
             text-align: center;
         }
-        .logout-btn {
-            background-color: #d32f2f;
-            color: white;
-            border: none;
+        .button {
             padding: 10px;
+            border: none;
             cursor: pointer;
             border-radius: 5px;
             width: 100%;
             margin-top: 10px;
+            color: white;
+        }
+        .logout-btn {
+            background-color: #d32f2f;
         }
         .logout-btn:hover {
             background-color: #b71c1c;
+        }
+        .clear-btn {
+            background-color: #1976d2;
+        }
+        .clear-btn:hover {
+            background-color: #1565c0;
         }
         table {
             width: 100%;
@@ -67,7 +75,8 @@
             <tbody id="historyTable">
             </tbody>
         </table>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+        <button class="button logout-btn" onclick="logout()">Logout</button>
+        <button class="button clear-btn" onclick="clearHistory()">Clear History</button>
     </div>
 
     <script>
@@ -90,6 +99,11 @@
         function logout() {
             localStorage.removeItem("currentUser");
             window.location.href = "index.html";
+        }
+    
+        function clearHistory() {
+            localStorage.removeItem("loginHistory");
+            document.getElementById("historyTable").innerHTML = "";
         }
     
         window.onload = loadLoginHistory;
