@@ -48,9 +48,18 @@
     .main-content {
       flex: 1;
       display: flex;
-      justify-content: center;
+      flex-direction: column; /* To stack elements vertically */
       align-items: center;
       padding: 40px;
+      overflow-y: auto;
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: #1976d2;
+      text-align: center;
     }
 
     .dashboard-container {
@@ -143,6 +152,8 @@
   </div>
 
   <div class="main-content">
+    <div class="page-title">Nonprofit Resource Management</div> <!-- NEW TITLE ADDED -->
+    
     <div class="dashboard-container">
       <h2>Admin Dashboard</h2>
       <div class="search-bar">
