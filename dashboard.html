@@ -58,7 +58,7 @@
       padding: 40px;
       border-radius: 15px;
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-      width: 800px; /* Made it bigger */
+      width: 800px;
       text-align: center;
     }
 
@@ -70,6 +70,18 @@
     .dashboard-container h3 {
       font-size: 24px;
       margin-bottom: 15px;
+    }
+
+    .search-bar {
+      margin-bottom: 20px;
+    }
+
+    .search-bar input {
+      width: 60%;
+      padding: 10px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
 
     .button {
@@ -133,6 +145,9 @@
   <div class="main-content">
     <div class="dashboard-container">
       <h2>Admin Dashboard</h2>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search by username..." onkeyup="filterHistory()">
+      </div>
       <h3>Welcome, <span id="currentUser"></span></h3>
       <h3>Login History</h3>
       <table>
@@ -151,20 +166,31 @@
   </div>
 
   <script>
-    function loadLoginHistory() {
-      let history = JSON.parse(localStorage.getItem("loginHistory")) || [];
-      let historyTable = document.getElementById("historyTable");
-      let currentUser = localStorage.getItem("currentUser") || "Unknown User";
+    let history = [];
 
+    function loadLoginHistory() {
+      history = JSON.parse(localStorage.getItem("loginHistory")) || [];
+      let currentUser = localStorage.getItem("currentUser") || "Unknown User";
       document.getElementById("currentUser").textContent = currentUser;
+      displayHistory(history);
+    }
+
+    function displayHistory(data) {
+      let historyTable = document.getElementById("historyTable");
       historyTable.innerHTML = "";
-      history.forEach(entry => {
+      data.forEach(entry => {
         let row = `<tr>
             <td>${entry.username}</td>
             <td>${entry.timestamp}</td>
         </tr>`;
         historyTable.innerHTML += row;
       });
+    }
+
+    function filterHistory() {
+      let input = document.getElementById("searchInput").value.toLowerCase();
+      let filtered = history.filter(entry => entry.username.toLowerCase().includes(input));
+      displayHistory(filtered);
     }
 
     function logout() {
@@ -174,6 +200,7 @@
 
     function clearHistory() {
       localStorage.removeItem("loginHistory");
+      history = [];
       document.getElementById("historyTable").innerHTML = "";
     }
 
