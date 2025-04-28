@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Glowing Admin Dashboard</title>
+  <title>Messages</title>
   <style>
     :root {
       --primary-color: #00bcd4;
@@ -99,14 +99,16 @@
       100% { text-shadow: 0 0 20px var(--glow-color), 0 0 30px var(--glow-color); }
     }
 
-    .dashboard-container {
-      background: var(--background-gradient);
-      padding: 40px;
-      border-radius: 20px;
+    .message-container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
       width: 800px;
-      text-align: center;
       box-shadow: 0 0 30px var(--glow-color);
       animation: floatDashboard 5s ease-in-out infinite alternate;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
     @keyframes floatDashboard {
@@ -114,65 +116,21 @@
       100% { transform: translateY(-10px); }
     }
 
-    .dashboard-container h2, .dashboard-container h3 {
-      margin-bottom: 20px;
+    .message {
+      background: var(--background-gradient);
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px var(--primary-color);
+    }
+
+    .message h4 {
+      margin: 0 0 10px;
       color: var(--secondary-color);
     }
 
-    .search-bar input {
-      width: 60%;
-      padding: 10px;
-      font-size: 18px;
-      border: 1px solid var(--primary-color);
-      border-radius: 5px;
-      box-shadow: 0 0 10px var(--glow-color);
-      margin-bottom: 20px;
-    }
-
-    .button {
-      padding: 15px;
-      border: none;
-      border-radius: 5px;
-      width: 100%;
-      margin-top: 15px;
-      font-size: 18px;
-      color: white;
-      background-color: var(--primary-color);
-      cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px var(--glow-color);
-    }
-
-    .logout-btn {
-      background-color: #d32f2f;
-    }
-
-    .logout-btn:hover {
-      background-color: #b71c1c;
-    }
-
-    table {
-      width: 100%;
-      margin-top: 20px;
-      border-collapse: collapse;
-      font-size: 18px;
-      box-shadow: 0 0 10px var(--glow-color);
-      background: white;
-    }
-
-    th, td {
-      border: 1px solid #ddd;
-      padding: 12px;
-      text-align: center;
-    }
-
-    th {
-      background-color: var(--primary-color);
-      color: white;
+    .message p {
+      margin: 0;
+      color: #333;
     }
   </style>
 </head>
@@ -183,73 +141,29 @@
   <img src="https://wallacefoundation.org/sites/default/files/2023-09/sfm-home-page-graphic.png" alt="Logo">
   <button onclick="location.href='dashboard.html'">Home</button>
   <button onclick="location.href='file.html'">File</button>
-  <button onclick="location.href='message.html'">Message</button> <!-- Updated -->
+  <button onclick="location.href='message.html'">Message</button>
   <button>Location</button>
   <button>Graph</button>
 </div>
 
 <div class="main-content">
-  <div class="page-title">Nonprofit Resource Management</div>
+  <div class="page-title">Messages</div>
 
-  <div class="dashboard-container">
-    <h2>Admin Dashboard</h2>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search by username..." onkeyup="filterHistory()">
+  <div class="message-container">
+    <div class="message">
+      <h4>Admin</h4>
+      <p>Welcome to the message center! Here you can view updates and notifications.</p>
     </div>
-    <h3>Welcome, <span id="currentUser"></span></h3>
-    <h3>Login History</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Login Time</th>
-        </tr>
-      </thead>
-      <tbody id="historyTable"></tbody>
-    </table>
-    <button class="button logout-btn" onclick="logout()">Logout</button>
-    <button class="button" onclick="clearHistory()">Clear History</button>
+    <div class="message">
+      <h4>Support Team</h4>
+      <p>Remember to back up your files before the end of the week!</p>
+    </div>
+    <div class="message">
+      <h4>System</h4>
+      <p>New features have been added to the dashboard. Check them out now!</p>
+    </div>
   </div>
 </div>
-
-<script>
-let history = [];
-
-function loadLoginHistory() {
-  history = JSON.parse(localStorage.getItem("loginHistory")) || [];
-  let currentUser = localStorage.getItem("currentUser") || "Unknown User";
-  document.getElementById("currentUser").textContent = currentUser;
-  displayHistory(history);
-}
-
-function displayHistory(data) {
-  let historyTable = document.getElementById("historyTable");
-  historyTable.innerHTML = "";
-  data.forEach(entry => {
-    let row = `<tr><td>${entry.username}</td><td>${entry.timestamp}</td></tr>`;
-    historyTable.innerHTML += row;
-  });
-}
-
-function filterHistory() {
-  let input = document.getElementById("searchInput").value.toLowerCase();
-  let filtered = history.filter(entry => entry.username.toLowerCase().includes(input));
-  displayHistory(filtered);
-}
-
-function logout() {
-  localStorage.removeItem("currentUser");
-  window.location.href = "index.html";
-}
-
-function clearHistory() {
-  localStorage.removeItem("loginHistory");
-  history = [];
-  document.getElementById("historyTable").innerHTML = "";
-}
-
-window.onload = loadLoginHistory;
-</script>
 
 </body>
 </html>
