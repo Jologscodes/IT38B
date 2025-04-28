@@ -29,7 +29,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Sidebar */
     .sidebar {
       width: 220px;
       background: var(--primary-color);
@@ -76,7 +75,6 @@
       transform: scale(1.05);
     }
 
-    /* Main Content */
     .main-content {
       flex: 1;
       padding: 40px;
@@ -157,10 +155,6 @@
       background-color: #b71c1c;
     }
 
-    .clear-btn {
-      background-color: var(--primary-color);
-    }
-
     table {
       width: 100%;
       margin-top: 20px;
@@ -180,85 +174,82 @@
       background-color: var(--primary-color);
       color: white;
     }
-
   </style>
 </head>
+
 <body>
 
-  <div class="sidebar">
-    <img src="https://wallacefoundation.org/sites/default/files/2023-09/sfm-home-page-graphic.png" alt="Logo">
-    <button>Home</button>
-    <button>File</button>
-    <button>Message</button>
-    <button>Location</button>
-    <button>Graph</button>
-  </div>
+<div class="sidebar">
+  <img src="https://wallacefoundation.org/sites/default/files/2023-09/sfm-home-page-graphic.png" alt="Logo">
+  <button onclick="location.href='dashboard.html'">Home</button>
+  <button onclick="location.href='file.html'">File</button>
+  <button>Message</button>
+  <button>Location</button>
+  <button>Graph</button>
+</div>
 
-  <div class="main-content">
-    <div class="page-title">Nonprofit Resource Management</div>
+<div class="main-content">
+  <div class="page-title">Nonprofit Resource Management</div>
 
-    <div class="dashboard-container">
-      <h2>Admin Dashboard</h2>
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search by username..." onkeyup="filterHistory()">
-      </div>
-      <h3>Welcome, <span id="currentUser"></span></h3>
-      <h3>Login History</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Login Time</th>
-          </tr>
-        </thead>
-        <tbody id="historyTable"></tbody>
-      </table>
-      <button class="button logout-btn" onclick="logout()">Logout</button>
-      <button class="button clear-btn" onclick="clearHistory()">Clear History</button>
+  <div class="dashboard-container">
+    <h2>Admin Dashboard</h2>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by username..." onkeyup="filterHistory()">
     </div>
+    <h3>Welcome, <span id="currentUser"></span></h3>
+    <h3>Login History</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Login Time</th>
+        </tr>
+      </thead>
+      <tbody id="historyTable"></tbody>
+    </table>
+    <button class="button logout-btn" onclick="logout()">Logout</button>
+    <button class="button" onclick="clearHistory()">Clear History</button>
   </div>
+</div>
 
-  <script>
-    let history = [];
+<script>
+let history = [];
 
-    function loadLoginHistory() {
-      history = JSON.parse(localStorage.getItem("loginHistory")) || [];
-      let currentUser = localStorage.getItem("currentUser") || "Unknown User";
-      document.getElementById("currentUser").textContent = currentUser;
-      displayHistory(history);
-    }
+function loadLoginHistory() {
+  history = JSON.parse(localStorage.getItem("loginHistory")) || [];
+  let currentUser = localStorage.getItem("currentUser") || "Unknown User";
+  document.getElementById("currentUser").textContent = currentUser;
+  displayHistory(history);
+}
 
-    function displayHistory(data) {
-      let historyTable = document.getElementById("historyTable");
-      historyTable.innerHTML = "";
-      data.forEach(entry => {
-        let row = `<tr>
-            <td>${entry.username}</td>
-            <td>${entry.timestamp}</td>
-        </tr>`;
-        historyTable.innerHTML += row;
-      });
-    }
+function displayHistory(data) {
+  let historyTable = document.getElementById("historyTable");
+  historyTable.innerHTML = "";
+  data.forEach(entry => {
+    let row = `<tr><td>${entry.username}</td><td>${entry.timestamp}</td></tr>`;
+    historyTable.innerHTML += row;
+  });
+}
 
-    function filterHistory() {
-      let input = document.getElementById("searchInput").value.toLowerCase();
-      let filtered = history.filter(entry => entry.username.toLowerCase().includes(input));
-      displayHistory(filtered);
-    }
+function filterHistory() {
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let filtered = history.filter(entry => entry.username.toLowerCase().includes(input));
+  displayHistory(filtered);
+}
 
-    function logout() {
-      localStorage.removeItem("currentUser");
-      window.location.href = "index.html";
-    }
+function logout() {
+  localStorage.removeItem("currentUser");
+  window.location.href = "index.html";
+}
 
-    function clearHistory() {
-      localStorage.removeItem("loginHistory");
-      history = [];
-      document.getElementById("historyTable").innerHTML = "";
-    }
+function clearHistory() {
+  localStorage.removeItem("loginHistory");
+  history = [];
+  document.getElementById("historyTable").innerHTML = "";
+}
 
-    window.onload = loadLoginHistory;
-  </script>
+window.onload = loadLoginHistory;
+</script>
 
 </body>
 </html>
