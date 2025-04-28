@@ -3,18 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin Dashboard with Sidebar</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #1976d2;
+            color: white;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+            padding-top: 20px;
         }
+
+        .sidebar button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            text-align: left;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .sidebar button:hover {
+            background-color: #1565c0;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
         .dashboard-container {
             background-color: white;
             padding: 20px;
@@ -23,6 +53,7 @@
             width: 400px;
             text-align: center;
         }
+
         .button {
             padding: 10px;
             border: none;
@@ -32,28 +63,35 @@
             margin-top: 10px;
             color: white;
         }
+
         .logout-btn {
             background-color: #d32f2f;
         }
+
         .logout-btn:hover {
             background-color: #b71c1c;
         }
+
         .clear-btn {
             background-color: #1976d2;
         }
+
         .clear-btn:hover {
             background-color: #1565c0;
         }
+
         table {
             width: 100%;
             margin-top: 10px;
             border-collapse: collapse;
         }
+
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
         }
+
         th {
             background-color: #1976d2;
             color: white;
@@ -61,22 +99,33 @@
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <h2>Admin Dashboard</h2>
-        <h3>Welcome, <span id="currentUser"></span></h3>
-        <h3>Login History</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Login Time</th>
-                </tr>
-            </thead>
-            <tbody id="historyTable">
-            </tbody>
-        </table>
-        <button class="button logout-btn" onclick="logout()">Logout</button>
-        <button class="button clear-btn" onclick="clearHistory()">Clear History</button>
+
+    <div class="sidebar">
+        <button>Home</button>
+        <button>File</button>
+        <button>Message</button>
+        <button>Location</button>
+        <button>Graph</button>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-container">
+            <h2>Admin Dashboard</h2>
+            <h3>Welcome, <span id="currentUser"></span></h3>
+            <h3>Login History</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Login Time</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTable">
+                </tbody>
+            </table>
+            <button class="button logout-btn" onclick="logout()">Logout</button>
+            <button class="button clear-btn" onclick="clearHistory()">Clear History</button>
+        </div>
     </div>
 
     <script>
@@ -108,5 +157,6 @@
     
         window.onload = loadLoginHistory;
     </script>
+
 </body>
 </html>
