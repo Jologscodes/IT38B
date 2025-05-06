@@ -1,3 +1,6 @@
+<?php
+// message.php
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -139,11 +142,11 @@
 
 <div class="sidebar">
   <img src="https://wallacefoundation.org/sites/default/files/2023-09/sfm-home-page-graphic.png" alt="Logo">
-  <button onclick="location.href='dashboard.html'">Home</button>
-  <button onclick="location.href='file.html'">File</button>
-  <button onclick="location.href='message.html'">Message</button>
-  <button>Location</button>
-  <button>Graph</button>
+  <button onclick="location.href='dashboard.php'">Home</button>
+  <button onclick="location.href='file.php'">File</button>
+  <button onclick="location.href='message.php'">Message</button>
+  <button onclick="location.href='location.php'">Location</button>
+  <button onclick="location.href='graph.php'">Graph</button>
 </div>
 
 <div class="main-content">
@@ -152,15 +155,15 @@
   <div class="message-container">
     <div class="message">
       <h4>Admin</h4>
-      <p>Welcome to the message center! Here you can view updates and notifications.</p>
+      <p>"We’ve updated the system—please check the latest version."</p>
     </div>
     <div class="message">
       <h4>Support Team</h4>
-      <p>Remember to back up your files before the end of the week!</p>
+      <p>"Thank you for reaching out. How can we assist you today?"</p>
     </div>
     <div class="message">
       <h4>System</h4>
-      <p>New features have been added to the dashboard. Check them out now!</p>
+      <p>"Registration completed successfully."</p>
     </div>
   </div>
 </div>

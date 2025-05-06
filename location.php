@@ -1,3 +1,6 @@
+<?php
+// location.php
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,11 +109,11 @@
 
 <div class="sidebar">
   <img src="https://wallacefoundation.org/sites/default/files/2023-09/sfm-home-page-graphic.png" alt="Logo">
-  <button onclick="location.href='dashboard.html'">Home</button>
-  <button onclick="location.href='file.html'">File</button>
-  <button onclick="location.href='message.html'">Message</button>
-  <button onclick="location.href='location.html'">Location</button>
-  <button onclick="location.href='graph.html'">Graph</button>
+  <button onclick="location.href='dashboard.php'">Home</button>
+  <button onclick="location.href='file.php'">File</button>
+  <button onclick="location.href='message.php'">Message</button>
+  <button onclick="location.href='location.php'">Location</button>
+  <button onclick="location.href='graph.php'">Graph</button>
 </div>
 
 <div class="main-content">
@@ -118,9 +121,9 @@
 
   <div class="location-container">
     <h2>Our Office Locations</h2>
-    <p>Main Office: 123 Nonprofit Ave, City, Country</p>
-    <p>Support Center: 456 Volunteer St, City, Country</p>
-    <p>Field Office: 789 Community Ln, City, Country</p>
+    <p>Main Office: 123 Manolo Fortich, Bukidnon, Phillipines</p>
+    <p>Support Center: 456 Los Santos, boulevard, UNITED KINGDOM</p>
+    <p>Field Office: 789 Sankanan, Manila, Japan</p>
   </div>
 </div>
 

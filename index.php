@@ -1,10 +1,54 @@
+<?php
+session_start();
+
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "entrep-dev";
+
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$loginError = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username']);
+    $password = $_POST['password'];
+
+    if (!empty($username) && !empty($password)) {
+        $sql = "SELECT * FROM users WHERE username = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+
+            if (password_verify($password, $row['password'])) {
+                // Set session variable and redirect
+                $_SESSION['username'] = $username;
+                header("Location: dashboard.php");
+                exit();
+            } else {
+                $loginError = "Incorrect password.";
+            }
+        } else {
+            $loginError = "User not found.";
+        }
+    } else {
+        $loginError = "Please enter both username and password.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nonprofit Resource Management</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             margin: 0;
@@ -49,12 +93,12 @@
             justify-content: center;
             align-items: center;
             box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-            overflow: hidden; 
+            overflow: hidden;
         }
         .circle img {
             width: 100%;
             height: 100%;
-            object-fit: cover; 
+            object-fit: cover;
         }
         .login-box {
             flex: 1;
@@ -100,6 +144,11 @@
         a:hover {
             text-decoration: underline;
         }
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -113,38 +162,17 @@
             </div>
             <div class="login-box">
                 <h2>LOGIN</h2>
-                <form onsubmit="return loginUser(event)">
-                    <input type="text" id="username" placeholder="Username" required>
-                    <input type="password" id="password" placeholder="Password" required>
+                <form method="POST">
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="password" name="password" placeholder="Password" required>
                     <button type="submit">LOG IN</button>
                 </form>
-                <p>Don't have an account? <a href="#">Register here</a></p>
+                <?php if (!empty($loginError)): ?>
+                    <div class="error"><?= htmlspecialchars($loginError) ?></div>
+                <?php endif; ?>
+                <p>Don't have an account? <a href="register.php">Register here</a></p>
             </div>
-            
-            <script>
-                function loginUser(event) {
-                    event.preventDefault(); 
-            
-                    let username = document.getElementById("username").value;
-                    let password = document.getElementById("password").value;
-            
-                    if (username.trim() === "" || password.trim() === "") {
-                        alert("Please enter a valid username and password.");
-                        return false;
-                    }
-            
-                    
-                    let loginHistory = JSON.parse(localStorage.getItem("loginHistory")) || [];
-                    let loginEntry = { username: username, timestamp: new Date().toLocaleString() };
-                    loginHistory.push(loginEntry);
-                    localStorage.setItem("loginHistory", JSON.stringify(loginHistory));
-            
-                    
-                    localStorage.setItem("currentUser", username);
-            
-                    
-                    window.location.href = "dashboard.html";
-                    return false;
-                }
-            </script>
-            
+        </div>
+    </div>
+</body>
+</html>

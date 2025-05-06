@@ -139,11 +139,11 @@
 
 <div class="sidebar">
   <img src="https://wallacefoundation.org/sites/default/files/2023-09/sfm-home-page-graphic.png" alt="Logo">
-  <button onclick="location.href='dashboard.html'">Home</button>
-  <button onclick="location.href='file.html'">File</button>
-  <button>Message</button>
-  <button>Location</button>
-  <button>Graph</button>
+  <button onclick="location.href='dashboard.php'">Home</button>
+  <button onclick="location.href='file.php'">File</button>
+  <button onclick="location.href='message.php'">Message</button>
+  <button onclick="location.href='location.php'">Location</button>
+  <button onclick="location.href='graph.php'">Graph</button>
 </div>
 
 <div class="main-content">
@@ -152,10 +152,12 @@
   <div class="dashboard-container">
     <h2>Uploaded Files</h2>
     <div class="file-list">
-      <div class="file-item">Document1.pdf</div>
-      <div class="file-item">Report2024.docx</div>
-      <div class="file-item">AnnualSummary.xlsx</div>
-      <div class="file-item">Presentation.pptx</div>
+      <div class="file-item">Administrative Files</div>
+      <div class="file-item">Financial Files</div>
+      <div class="file-item">Personnel Files</div>
+      <div class="file-item">Program Files</div>
+      <div class="file-item">Legal and Compliance Files</div>
+      <div class="file-item">Marketing and Communication Files</div>
     </div>
   </div>
 </div>
