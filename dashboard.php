@@ -109,40 +109,41 @@ while ($row = $result->fetch_assoc()) {
       margin-bottom: 20px;
     }
 
-    .search-bar {
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    .search-bar input {
-      padding: 10px;
-      font-size: 16px;
-      width: 250px;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    /* Card Layout for Features */
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
       margin-top: 20px;
     }
 
-    table th, table td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
+    .card {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
 
-    table th {
-      background-color: #f1f1f1;
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     }
 
-    table tr:hover {
-      background-color: #f9f9f9;
+    .card i {
+      font-size: 40px;
+      color: #2f3b52;
+      margin-bottom: 10px;
     }
 
+    .card h3 {
+      font-size: 18px;
+      color: #333;
+    }
+
+    /* Logout Button */
     .button.logout-btn {
       background-color: #e74c3c;
       color: white;
@@ -169,8 +170,14 @@ while ($row = $result->fetch_assoc()) {
         margin-left: 220px;
       }
 
-      .search-bar input {
-        width: 200px;
+      .card-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .card-container {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -193,28 +200,39 @@ while ($row = $result->fetch_assoc()) {
 
     <div class="dashboard-container">
       <h2>Admin Dashboard</h2>
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search by username..." onkeyup="filterHistory()">
-      </div>
-      
       <h3>Welcome, <span id="currentUser"><?= htmlspecialchars($_SESSION['username']) ?></span></h3>
-      <h3>Login History</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Login Time</th>
-          </tr>
-        </thead>
-        <tbody id="historyTable">
-          <?php foreach ($history as $entry): ?>
-            <tr>
-              <td><?= htmlspecialchars($entry['username']) ?></td>
-              <td><?= htmlspecialchars($entry['login_time']) ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
+
+      <div class="card-container">
+        <!-- Manage Donations -->
+        <div class="card" onclick="location.href='manage_donations.php'">
+          <i class="fa fa-donate"></i>
+          <h3>Manage Donations</h3>
+        </div>
+
+        <!-- Allocate Resources -->
+        <div class="card" onclick="location.href='allocate_resources.php'">
+          <i class="fa fa-cogs"></i>
+          <h3>Allocate Resources</h3>
+        </div>
+
+        <!-- Generate Reports -->
+        <div class="card" onclick="location.href='generate_reports.php'">
+          <i class="fa fa-chart-bar"></i>
+          <h3>Generate Reports</h3>
+        </div>
+
+        <!-- Schedule Events -->
+        <div class="card" onclick="location.href='schedule_events.php'">
+          <i class="fa fa-calendar-check"></i>
+          <h3>Schedule Events</h3>
+        </div>
+
+        <!-- Track Inventory -->
+        <div class="card" onclick="location.href='track_inventory.php'">
+          <i class="fa fa-boxes"></i>
+          <h3>Track Inventory</h3>
+        </div>
+      </div>
 
       <!-- Logout Button -->
       <form method="post" action="logout.php">
@@ -222,17 +240,6 @@ while ($row = $result->fetch_assoc()) {
       </form>
     </div>
   </div>
-
-  <script>
-    function filterHistory() {
-      let input = document.getElementById("searchInput").value.toLowerCase();
-      let rows = document.querySelectorAll("#historyTable tr");
-      rows.forEach(row => {
-        const username = row.children[0].textContent.toLowerCase();
-        row.style.display = username.includes(input) ? "" : "none";
-      });
-    }
-  </script>
 
 </body>
 </html>

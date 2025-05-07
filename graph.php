@@ -28,30 +28,16 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donations by Program</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background: #f5f7fa;
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        .chart-container {
-            width: 90%;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-    </style>
 </head>
 <body>
-    <h2>"Total Donations by Program"</h2>
-    <div class="chart-container">
+    <h2>Total Donations by Program</h2>
+    <div>
         <canvas id="donationChart"></canvas>
     </div>
 
@@ -62,22 +48,16 @@ $conn->close();
             data: {
                 labels: <?= json_encode($programs); ?>,
                 datasets: [{
-                    label: '₱ Donations Received',
+                    label: '₱ Donations',
                     data: <?= json_encode($totals); ?>,
-                    backgroundColor: [
-                        '#a0d8ef', '#ffb6b9', '#c1f0c1', '#ffd6a5', '#b5ead7', '#fcd5ce'
-                    ],
-                    borderRadius: 8,
-                    borderSkipped: false
+                    backgroundColor: '#4e73df', // Simple color
+                    borderRadius: 5
                 }]
             },
             options: {
                 indexAxis: 'y', // makes it horizontal
                 responsive: true,
                 plugins: {
-                    legend: {
-                        display: false
-                    },
                     tooltip: {
                         callbacks: {
                             label: (ctx) => `₱ ${ctx.parsed.x.toLocaleString()}`
@@ -93,10 +73,7 @@ $conn->close();
                     },
                     y: {
                         ticks: {
-                            color: '#333',
-                            font: {
-                                weight: 'bold'
-                            }
+                            color: '#333'
                         }
                     }
                 }
