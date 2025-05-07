@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $stmt->close();
                 $check->close();
                 $conn->close();
-                header("Location: http://localhost/entrep-dev/index.php");
+                header("Location: http://localhost/entrep-dev/IT38B/index.php");
                 exit();
             } else {
                 $error = "Error: " . $stmt->error;

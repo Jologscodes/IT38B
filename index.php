@@ -28,9 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $row = $result->fetch_assoc();
 
             if (password_verify($password, $row['password'])) {
-                // Set session variable and redirect
                 $_SESSION['username'] = $username;
-                header("Location: dashboard.php");
+                $_SESSION['role'] = $row['role'];
+
+                if ($row['role'] === 'admin') {
+                    header("Location: admin_dashboard.php");
+                } elseif ($row['role'] === 'donor') {
+                    header("Location: donor_dashboard.php");
+                } elseif ($row['role'] === 'beneficiary') {
+                    header("Location: beneficiary_dashboard.php");
+                }
                 exit();
             } else {
                 $loginError = "Incorrect password.";
@@ -48,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Nonprofit Resource Management</title>
+    <title>Login</title>
     <style>
         body {
             margin: 0;
@@ -157,22 +164,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="main-content">
             <div class="circle-section">
                 <div class="circle">
-                    <img src="https://wallacefoundation.org/sites/default/files/2023-09/sfm-home-page-graphic.png" alt="">
+                    <img src="https://wallacefoundation.org/sites/default/files/2023-09/sfm-home-page-graphic.png" alt="Image">
                 </div>
             </div>
             <div class="login-box">
-                <h2>LOGIN</h2>
+                <h2>Login</h2>
                 <form method="POST">
                     <input type="text" name="username" placeholder="Username" required>
                     <input type="password" name="password" placeholder="Password" required>
                     <button type="submit">LOG IN</button>
                 </form>
+                <form action="register.php" method="GET">
+                    <button type="submit" style="margin-top: 10px;">Create an account</button>
+                </form>
                 <?php if (!empty($loginError)): ?>
-                    <div class="error"><?= htmlspecialchars($loginError) ?></div>
+                    <p class="error"><?= htmlspecialchars($loginError) ?></p>
                 <?php endif; ?>
-                <p>Don't have an account? <a href="register.php">Register here</a></p>
             </div>
         </div>
     </div>
 </body>
 </html>
+
+<?php if (isset($_GET['registered']) && $_GET['registered'] == 1): ?>
+    <p style="color:lightgreen; text-align:center;">Registration successful! Please log in.</p>
+<?php endif; ?>
+

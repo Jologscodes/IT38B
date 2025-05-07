@@ -1,30 +1,23 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['username'])) {
+// Check if the user is logged in and has a valid role
+if (!isset($_SESSION['username']) || !isset($_SESSION['role'])) {
     header("Location: index.php");
     exit();
 }
 
-$host = 'localhost';
-$dbname = 'entrep-dev';
-$db_user = 'root';
-$db_pass = '';
-
-// Database connection
-$conn = new mysqli($host, $db_user, $db_pass, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Redirect based on the user's role
+if ($_SESSION['role'] === 'admin') {
+    header("Location: admin_dashboard.php");
+} elseif ($_SESSION['role'] === 'donor') {
+    header("Location: donor_dashboard.php");
+} elseif ($_SESSION['role'] === 'beneficiary') {
+    header("Location: beneficiary_dashboard.php");
+} else {
+    header("Location: index.php"); // Default redirect if role is not recognized
 }
-
-// Fetch login history
-$sql = "SELECT username, login_time FROM login_history ORDER BY login_time DESC";
-$result = $conn->query($sql);
-
-$history = [];
-while ($row = $result->fetch_assoc()) {
-    $history[] = $row;
-}
+exit();
 ?>
 
 <!DOCTYPE html>
