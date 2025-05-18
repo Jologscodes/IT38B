@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["admin_id"] = 1;
             $_SESSION["admin_email"] = $valid_email;
 
-            header("Location: admin_dashboard.php");
+            header("Location: ./admin/admin_dashboard.php");
             exit;
         } else {
             $password_err = "Incorrect email or password.";
@@ -172,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="navbar">
       <div class="navbar-title">Nonprofit Resource Management</div>
       <div class="nav-buttons">
-        <a href="./admin_log.php"><button class="btn">Admin</button></a>
+        <a href="admin_log.php"><button class="btn">Admin</button></a>
         <a href="donor_log.php"><button class="btn">Donor</button></a>
         <a href="beneficiary_login.php"><button class="btn">Beneficiary</button></a>
       </div>

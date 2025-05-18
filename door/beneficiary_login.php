@@ -176,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="navbar-title">Nonprofit Resource Management</div>
       <div class="nav-buttons">
         <a href="admin_log.php"><button class="btn">Admin</button></a>
-        <a href="donor_login.php"><button class="btn">Donor</button></a>
+        <a href="donor_log.php"><button class="btn">Donor</button></a>
         <a href="beneficiary_login.php"><button class="btn">Beneficiary</button></a>
       </div>
     </div>

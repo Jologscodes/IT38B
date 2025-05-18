@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2025 at 06:04 AM
+-- Generation Time: May 19, 2025 at 12:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,6 +43,20 @@ INSERT INTO `admins` (`id`, `email`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `beneficiaries`
+--
+
+CREATE TABLE `beneficiaries` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `donors`
 --
 
@@ -61,31 +75,6 @@ CREATE TABLE `donors` (
 INSERT INTO `donors` (`id`, `name`, `email`, `password`, `created_at`) VALUES
 (1, 'joshua', 'opop@gmail.com', '$2y$10$flGdGxn8pceJam96y/YHzOlEx9ZiTo97DjkBnLeUL8VYspPyvGhYy', '2025-05-16 04:24:01');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `fullname` varchar(100) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `role` varchar(50) NOT NULL DEFAULT 'beneficiary',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `fullname`, `username`, `email`, `password`, `role`, `created_at`) VALUES
-(1, 'jologs', 'jologs', 'jologs@gmail.com', '$2y$10$GQY.AG7wFIwdIvNWOepHX.aGt5IuMNAkH46y/xQA/AQ9R80HCxpfi', 'beneficiary', '2025-05-16 02:17:39'),
-(2, 'admin', 'admin', 'admin@gmail.com', '$2y$10$9VJQKugHnt6CS3aHQ/P.De5ouxgD4tMXhb.iT5FeVsHiZDyUIKoF.', 'beneficiary', '2025-05-16 02:21:11'),
-(3, 'bogs', 'bogs', 'bogs@gmail.com', '$2y$10$m5ycqmLvMWC.CKAoUQAADeTk81Udl8nmHWyyN4MU5evGan.uiIeia', 'beneficiary', '2025-05-16 02:26:03');
-
 --
 -- Indexes for dumped tables
 --
@@ -98,18 +87,17 @@ ALTER TABLE `admins`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `donors`
+-- Indexes for table `beneficiaries`
 --
-ALTER TABLE `donors`
+ALTER TABLE `beneficiaries`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `users`
+-- Indexes for table `donors`
 --
-ALTER TABLE `users`
+ALTER TABLE `donors`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
@@ -123,16 +111,16 @@ ALTER TABLE `admins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `beneficiaries`
+--
+ALTER TABLE `beneficiaries`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `donors`
 --
 ALTER TABLE `donors`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

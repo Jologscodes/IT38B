@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty(trim($_POST["email"]))) {
         $email_err = "Please enter your email.";
     } else {
-        $sql = "SELECT id FROM donors WHERE email = :email";
+        $sql = "SELECT id FROM beneficiaries WHERE email = :email";
         if ($stmt = $pdo->prepare($sql)) {
             $stmt->bindParam(":email", trim($_POST["email"]), PDO::PARAM_STR);
             $stmt->execute();
@@ -49,14 +49,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Insert data if no errors
     if (empty($name_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)) {
-        $sql = "INSERT INTO donors (name, email, password) VALUES (:name, :email, :password)";
+        $sql = "INSERT INTO beneficiaries (name, email, password) VALUES (:name, :email, :password)";
         if ($stmt = $pdo->prepare($sql)) {
             $stmt->bindParam(":name", $name, PDO::PARAM_STR);
             $stmt->bindParam(":email", $email, PDO::PARAM_STR);
             $stmt->bindParam(":password", password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
 
             if ($stmt->execute()) {
-                header("Location: donor_log.php");
+                header("Location: beneficiary_log.php");
                 exit;
             } else {
                 echo "Something went wrong. Please try again later.";
@@ -65,13 +65,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Donor Registration</title>
+  <title>Beneficiary Registration</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body, html { height: 100%; font-family: Arial, sans-serif; }
@@ -180,8 +179,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="content">
-      <form class="login-box" action="donor_register.php" method="post">
-        <h2>Donor Registration</h2>
+      <form class="login-box" action="beneficiary_register.php" method="post">
+        <h2>Beneficiary Registration</h2>
 
         <div class="form-group">
           <label for="name">Full Name</label>
@@ -209,7 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <button type="submit" class="btn-submit">Register</button>
 
-        <p class="text-muted">Already have an account? <a href="donor_log.php">Login</a></p>
+        <p class="text-muted">Already have an account? <a href="beneficiary_log.php">Login</a></p>
         <p class="text-muted">Go back to <a href="index.php">Home</a></p>
       </form>
     </div>
