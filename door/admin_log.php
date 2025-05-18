@@ -1,34 +1,30 @@
 <?php
 session_start();
 
-// Hardcoded credentials
 $valid_email = "admin@gmail.com";
-$valid_password = "admin09"; // Plain password to verify
+$valid_password = "admin09";
 
-// Initialize variables
 $email = $password = "";
 $email_err = $password_err = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate email
+   
     if (empty(trim($_POST["email"]))) {
         $email_err = "Please enter email.";
     } else {
         $email = trim($_POST["email"]);
     }
 
-    // Validate password
     if (empty(trim($_POST["password"]))) {
         $password_err = "Please enter your password.";
     } else {
         $password = trim($_POST["password"]);
     }
 
-    // If no errors, check credentials
     if (empty($email_err) && empty($password_err)) {
         if ($email === $valid_email && $password === $valid_password) {
-            // Login success, set session
-            $_SESSION["admin_id"] = 1; // fixed admin ID
+      
+            $_SESSION["admin_id"] = 1;
             $_SESSION["admin_email"] = $valid_email;
 
             header("Location: admin_dashboard.php");
@@ -212,7 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       <button type="submit" class="btn-submit">Login</button>
 
-      <p class="text-muted">Go back to <a href="index.php">Home</a></p>
+      <p class="text-muted">Go back to <a href="../index.php">Home</a></p>
     </form>
 
   </div>

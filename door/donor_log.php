@@ -204,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <button type="submit" class="btn-submit">Login</button>
 
           <p class="text-muted">Don't have an account? <a href="donor_register.php">Register</a></p>
-          <p class="text-muted">Go back to <a href="index.php">Home</a></p>
+          <p class="text-muted">Go back to <a href="../index.php">Home</a></p>
         </form>
       </div>
     </div>
