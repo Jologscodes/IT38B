@@ -107,7 +107,7 @@
       <div class="nav-buttons">
         <a href="./door/admin_log.php"><button class="btn">Admin</button></a>
         <a href="./door/donor_log.php"><button class="btn">Donor</button></a>
-        <a href="beneficiary_login.php"><button class="btn">Beneficiary</button></a>
+        <a href="./door/beneficiary_login.php"><button class="btn">Beneficiary</button></a>
       </div>
     </div>
 
