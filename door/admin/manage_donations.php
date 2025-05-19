@@ -152,7 +152,7 @@ try {
     <a href="admin_dashboard.php">Dashbaord</a>
     <a href="manage_users.php">Manage Users</a>
     <a href="manage_donations.php">Manage Donations</a>
-
+    <a href="Request.php">Request</a>
     <a href="generate_reports.php">Generate Reports</a>
   
    
@@ -179,7 +179,7 @@ try {
               <th>Description</th>
               <th>Quantity</th>
               <th>Donation Date</th>
-              <th>Created At</th>
+            
               <th>Action</th>
             </tr>
           </thead>
@@ -192,7 +192,7 @@ try {
                 <td><?= htmlspecialchars($donation['description']); ?></td>
                 <td><?= htmlspecialchars($donation['quantity']); ?></td>
                 <td><?= htmlspecialchars($donation['donation_date']); ?></td>
-                <td><?= htmlspecialchars($donation['created_at']); ?></td>
+               
                 <td>
                   <form method="POST" action="delete_donation.php" onsubmit="return confirm('Are you sure you want to delete this donation?');">
                     <input type="hidden" name="id" value="<?= $donation['id']; ?>">

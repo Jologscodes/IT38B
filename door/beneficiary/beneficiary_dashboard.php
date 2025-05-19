@@ -8,9 +8,8 @@ if (!isset($_SESSION['beneficiary_id'])) {
 
 $name = $_SESSION['beneficiary_name'] ?? "Beneficiary";
 
-require '../../data/config.php'; // Adjust path if needed
+require '../../data/config.php'; 
 
-// Fetch reports for beneficiaries or all
 $sql = "SELECT r.id, r.message, r.created_at, a.email AS admin_email
         FROM reports r
         JOIN admins a ON r.admin_id = a.id
@@ -60,7 +59,7 @@ $reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <a href="beneficiary_dashboard.php">beneficiary dashboard</a>
     <a href="ReviewResources.php">Review Resources</a>
-    <a href="RequestResources.php" class="active">Request Resources</a>
+    <a href="RequestResources.php">Request Resources</a>
   </nav>
 
   <div class="main-content">

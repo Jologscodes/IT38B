@@ -6,7 +6,7 @@ if (!isset($_SESSION["admin_id"])) {
     exit;
 }
 
-require_once '../../data/config.php'; // make sure this path is correct
+require_once '../../data/config.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $audience = $_POST["audience"];

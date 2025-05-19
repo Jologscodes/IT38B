@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['donation_id'])) {
         $stmt = $pdo->prepare($deleteSql);
         $stmt->execute([$donation_id]);
 
-        // Delete photo if it exists and is not default
         if (!empty($donation['photo']) && $donation['photo'] !== 'default.png') {
             $photoPath = '../../uploads/donations/' . $donation['photo'];
             if (file_exists($photoPath)) {

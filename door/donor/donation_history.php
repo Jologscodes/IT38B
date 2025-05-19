@@ -2,7 +2,6 @@
 session_start();
 require '../../data/config.php'; // Adjust path to your DB config file
 
-// Check if donor is logged in
 if (!isset($_SESSION['donor_id'])) {
     header("Location: donor_login.php");
     exit();
@@ -12,7 +11,7 @@ $donor_id = $_SESSION['donor_id'];
 $donor_name = $_SESSION['donor_name'];
 
 try {
-    $stmt = $pdo->prepare("SELECT item_type, description, quantity, photo, donation_date 
+    $stmt = $pdo->prepare("SELECT id, item_type, description, quantity, photo, donation_date 
                            FROM item_donations 
                            WHERE donor_id = :donor_id 
                            ORDER BY donation_date DESC");
@@ -36,7 +35,6 @@ try {
   flex-wrap: wrap;
   gap: 20px;
 }
-
 .donation-card {
   background-color: white;
   border: 1px solid #ddd;
@@ -45,21 +43,31 @@ try {
   padding: 15px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-
 .donation-card img {
   width: 100%;
   height: 180px;
   object-fit: cover;
   border-radius: 8px;
 }
-
 .donation-info {
   margin-top: 10px;
 }
-
 .no-donations {
   font-style: italic;
   color: #777;
+}
+.edit-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.edit-btn:hover {
+  background-color: #0056b3;
 }
 </style>
 </head>
@@ -74,6 +82,7 @@ try {
         <a href="make_donation.php">Make a Donation</a>
         <a href="donation_history.php">Donation History</a>
         <a href="Message.php">Message</a>
+        <a href="Request_Report.php" class="active">Request Reports</a>
         <a href="Reports.php">Reports</a>
       </div>
     </div>
@@ -102,6 +111,7 @@ try {
               <p><strong>Description:</strong> <?= htmlspecialchars($donation['description']) ?></p>
               <p><strong>Quantity:</strong> <?= (int)$donation['quantity'] ?></p>
               <p><strong>Date:</strong> <?= date("F j, Y, g:i a", strtotime($donation['donation_date'])) ?></p>
+              <a href="edit_donation.php?id=<?= $donation['id'] ?>" class="edit-btn">Edit</a>
             </div>
           </div>
         <?php endforeach; ?>

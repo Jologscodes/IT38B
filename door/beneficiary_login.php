@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .background {
-      background-color: #b30000; /* Strong red background */
+      background-color: red; 
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -103,12 +103,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .login-box {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+        background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 320px; 
+  max-width: none; 
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  position: relative; 
     }
 
     .login-box h2 {
@@ -172,6 +174,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .text-muted a:hover {
       text-decoration: underline;
     }
+    .side-by-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  padding: 2rem;
+}
+.login-image {
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+  flex-shrink: 0;
+}
+
   </style>
 </head>
 <body>
@@ -186,6 +204,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="content">
+    <div class="side-by-side">
+  <img src="../image/bg.jpg" alt="Beneficiary Image" class="login-image">
+
       <form class="login-box" action="beneficiary_login.php" method="post" novalidate>
         <h2>Beneficiary Login</h2>
 

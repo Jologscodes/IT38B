@@ -82,8 +82,10 @@ $reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a href="donor_dashboard.php">Dashboard</a>
         <a href="make_donation.php">Make a Donation</a>
         <a href="donation_history.php">Donation History</a>
-        <a href="Reports.php" class="active">Reports</a>
         <a href="Message.php">Message</a>
+        <a href="Request_Report.php" class="active">Request Reports</a>
+        <a href="Reports.php" class="active">Reports</a>
+        
       </div>
     </div>
     <a class="logout-btn" href="../logout.php">Logout</a>

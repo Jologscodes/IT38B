@@ -5,14 +5,13 @@ $name = $email = $password = $confirm_password = "";
 $name_err = $email_err = $password_err = $confirm_password_err = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Name validation
+   
     if (empty(trim($_POST["name"]))) {
         $name_err = "Please enter your name.";
     } else {
         $name = trim($_POST["name"]);
     }
 
-    // Email validation
     if (empty(trim($_POST["email"]))) {
         $email_err = "Please enter your email.";
     } else {
@@ -28,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Password validation
     if (empty(trim($_POST["password"]))) {
         $password_err = "Please enter a password.";
     } elseif (strlen(trim($_POST["password"])) < 6) {
@@ -37,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = trim($_POST["password"]);
     }
 
-    // Confirm password validation
     if (empty(trim($_POST["confirm_password"]))) {
         $confirm_password_err = "Please confirm password.";
     } else {
@@ -47,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Insert data if no errors
     if (empty($name_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)) {
         $sql = "INSERT INTO beneficiaries (name, email, password) VALUES (:name, :email, :password)";
         if ($stmt = $pdo->prepare($sql)) {
@@ -208,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <button type="submit" class="btn-submit">Register</button>
 
-        <p class="text-muted">Already have an account? <a href="beneficiary_log.php">Login</a></p>
+        <p class="text-muted">Already have an account? <a href="beneficiary_login.php">Login</a></p>
         <p class="text-muted">Go back to <a href="index.php">Home</a></p>
       </form>
     </div>

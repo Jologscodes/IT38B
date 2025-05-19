@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Dashboard</h2>
     <a href="beneficiary_dashboard.php">beneficiary dashboard</a>
     <a href="ReviewResources.php">Review Resources</a>
-    <a href="RequestResources.php" class="active">Request Resources</a>
+    <a href="RequestResources.php">Request Resources</a>
   </nav>
 
   <div class="main-content">

@@ -47,6 +47,7 @@ foreach ($donations as $donation) {
         <a href="make_donation.php">Make a Donation</a>
         <a href="donation_history.php">Donation History</a>
         <a href="Message.php">Message</a>
+        <a href="Request_Report.php" class="active">Request Reports</a>
         <a href="Reports.php">Reports</a>
       </div>
     </div>

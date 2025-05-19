@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .background {
-      background-color: #b30000; /* Strong red background */
+      background-color: red; 
       height: 100vh;
       display: flex;
       flex-direction: column;

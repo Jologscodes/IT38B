@@ -80,6 +80,39 @@ try {
       margin-top: 8px;
       color: #333;
     }
+    .resource-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.resource-item {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.resource-item:hover {
+  transform: translateY(-5px);
+}
+
+.resource-item img {
+  max-width: 100%;
+  max-height: 180px;
+  object-fit: contain;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
   </style>
 </head>
 <body>
@@ -87,7 +120,7 @@ try {
     <h2>Dashboard</h2>
     <a href="beneficiary_dashboard.php">beneficiary dashboard</a>
     <a href="ReviewResources.php">Review Resources</a>
-    <a href="RequestResources.php" class="active">Request Resources</a>
+    <a href="RequestResources.php">Request Resources</a>
   </nav>
 
   <div class="main-content">
@@ -142,7 +175,6 @@ try {
   </div>
 
   <script>
-    // Make the success message vanish after 5 seconds
     setTimeout(() => {
       const msg = document.getElementById('success-message');
       if (msg) {

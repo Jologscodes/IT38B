@@ -35,13 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['kick_id']) && isset($
 
     if ($stmtDel) {
         $stmtDel->execute([$kickId]);
-        // Redirect to avoid resubmission
+      
         header("Location: manage_users.php");
         exit;
     }
 }
 
-// Fetch users
 $stmt = $pdo->query("SELECT id, email, name, created_at FROM beneficiaries ORDER BY created_at DESC");
 $beneficiaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -216,6 +215,7 @@ $donors = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <a href="admin_dashboard.php">Dashbaord</a>
     <a href="manage_users.php">Manage Users</a>
     <a href="manage_donations.php">Manage Donations</a>
+    <a href="Request.php">Request</a>
     <a href="generate_reports.php">Generate Reports</a>
   </div>
 
@@ -269,7 +269,7 @@ $donors = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             <th>Name</th>
             <th>Email</th>
             <th>Joined At</th>
-            <th>Action</th> <!-- New Action column -->
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
