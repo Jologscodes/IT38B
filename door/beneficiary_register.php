@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(":password", password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
 
             if ($stmt->execute()) {
-                header("Location: beneficiary_log.php");
+                header("Location: beneficiary_login.php");
                 exit;
             } else {
                 echo "Something went wrong. Please try again later.";

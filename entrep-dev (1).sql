@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2025 at 12:56 AM
+-- Generation Time: May 19, 2025 at 02:25 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -73,7 +73,22 @@ CREATE TABLE `donors` (
 --
 
 INSERT INTO `donors` (`id`, `name`, `email`, `password`, `created_at`) VALUES
-(1, 'joshua', 'opop@gmail.com', '$2y$10$flGdGxn8pceJam96y/YHzOlEx9ZiTo97DjkBnLeUL8VYspPyvGhYy', '2025-05-16 04:24:01');
+(1, 'joshua', 'opop@gmail.com', '$2y$10$flGdGxn8pceJam96y/YHzOlEx9ZiTo97DjkBnLeUL8VYspPyvGhYy', '2025-05-16 04:24:01'),
+(2, 'aa', 'donor@gmail.com', '$2y$10$Vt5fCHSs16QTrtZPMmI.u.4APWbw0cjJnCYd2bJK6xZ1Vg19Lo6XW', '2025-05-18 23:32:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resource_allocations`
+--
+
+CREATE TABLE `resource_allocations` (
+  `id` int(11) NOT NULL,
+  `resource_name` varchar(255) NOT NULL,
+  `allocated_to` varchar(255) NOT NULL,
+  `allocation_date` date NOT NULL,
+  `notes` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -101,6 +116,12 @@ ALTER TABLE `donors`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `resource_allocations`
+--
+ALTER TABLE `resource_allocations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -120,7 +141,13 @@ ALTER TABLE `beneficiaries`
 -- AUTO_INCREMENT for table `donors`
 --
 ALTER TABLE `donors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `resource_allocations`
+--
+ALTER TABLE `resource_allocations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

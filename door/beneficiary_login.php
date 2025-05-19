@@ -1,40 +1,36 @@
 <?php
 session_start();
-require_once "../data/config.php";
+require_once '../data/config.php';
 
 $email = $password = "";
-$email_err = $password_err = "";
+$error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty(trim($_POST["email"]))) {
-        $email_err = "Please enter your email.";
-    } else {
-        $email = trim($_POST["email"]);
-    }
+    $email = trim($_POST['email'] ?? '');
+    $password = trim($_POST['password'] ?? '');
 
-    if (empty(trim($_POST["password"]))) {
-        $password_err = "Please enter your password.";
+    if (empty($email)) {
+        $error = "Please enter your email.";
+    } elseif (empty($password)) {
+        $error = "Please enter your password.";
     } else {
-        $password = trim($_POST["password"]);
-    }
+        $sql = "SELECT id, name, password FROM beneficiaries WHERE email = :email LIMIT 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
 
-    if (empty($email_err) && empty($password_err)) {
-        $sql = "SELECT id, email, password FROM beneficiaries WHERE email = :email";
-        if ($stmt = $pdo->prepare($sql)) {
-            $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-            if ($stmt->execute() && $stmt->rowCount() == 1) {
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                if (password_verify($password, $row["password"])) {
-                    $_SESSION["beneficiary_id"] = $row["id"];
-                    $_SESSION["beneficiary_email"] = $row["email"];
-                    header("Location: beneficiary_dashboard.php");
-                    exit;
-                } else {
-                    $password_err = "Incorrect password.";
-                }
+        if ($stmt->rowCount() == 1) {
+            $beneficiary = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (password_verify($password, $beneficiary['password'])) {
+                $_SESSION['beneficiary_id'] = $beneficiary['id'];
+                $_SESSION['beneficiary_name'] = $beneficiary['name'];
+                header("Location: ./beneficiary/beneficiary_dashboard.php");
+                exit();
             } else {
-                $email_err = "No account found with that email.";
+                $error = "Invalid password.";
             }
+        } else {
+            $error = "No beneficiary found with that email.";
         }
     }
 }
@@ -44,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Beneficiary Login - Nonprofit Resource Management</title>
   <style>
     * {
@@ -59,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .background {
-      background-color: red;
+      background-color: #b30000; /* Strong red background */
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -89,14 +85,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       font-size: 1rem;
       border: none;
       border-radius: 8px;
-      background-color: rgb(232, 32, 32);
+      background-color: #cc0000;
       color: white;
       cursor: pointer;
       transition: background-color 0.3s;
     }
 
     .btn:hover {
-      background-color: #218838;
+      background-color: #800000;
     }
 
     .content {
@@ -118,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .login-box h2 {
       text-align: center;
       margin-bottom: 20px;
-      color: red;
+      color: #b30000;
     }
 
     .form-group {
@@ -128,6 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .form-group label {
       display: block;
       font-weight: bold;
+      color: #b30000;
     }
 
     .form-group input {
@@ -138,25 +135,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       border: 1px solid #ccc;
     }
 
-    .form-group span {
-      color: red;
-      font-size: 0.9em;
+    .error-msg {
+      color: #b30000;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: bold;
     }
 
-    .login-box .btn-submit {
+    .btn-submit {
       width: 100%;
       padding: 10px;
       border: none;
-      background: red;
+      background: #b30000;
       color: white;
       font-weight: bold;
       border-radius: 5px;
       cursor: pointer;
       margin-top: 10px;
+      transition: background-color 0.3s;
     }
 
-    .login-box .btn-submit:hover {
-      background-color: #b30000;
+    .btn-submit:hover {
+      background-color: #800000;
     }
 
     .text-muted {
@@ -166,7 +166,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .text-muted a {
-      color: red;
+      color: #b30000;
+      text-decoration: none;
+    }
+    .text-muted a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -182,31 +186,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="content">
-      <div style="display: flex; align-items: center; gap: 60px; flex-wrap: wrap; justify-content: center;">
-        <img src="../image/bg.jpg" alt="Beneficiary Image" 
-          style="width: 500px; height: 500px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 30px rgba(0,0,0,0.7); flex-shrink: 0;">
+      <form class="login-box" action="beneficiary_login.php" method="post" novalidate>
+        <h2>Beneficiary Login</h2>
 
-        <form class="login-box" action="beneficiary_login.php" method="post" style="flex: 1; min-width: 320px; max-width: 450px;">
-          <h2>Beneficiary Login</h2>
+        <?php if ($error): ?>
+          <div class="error-msg"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
 
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>" required>
-            <span><?php echo $email_err; ?></span>
-          </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+            type="email" 
+            name="email" 
+            id="email" 
+            value="<?php echo htmlspecialchars($email); ?>" 
+            required 
+            autocomplete="username"
+          />
+        </div>
 
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required>
-            <span><?php echo $password_err; ?></span>
-          </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input 
+            type="password" 
+            name="password" 
+            id="password" 
+            required 
+            autocomplete="current-password"
+          />
+        </div>
 
-          <button type="submit" class="btn-submit">Login</button>
+        <button type="submit" class="btn-submit">Login</button>
 
-          <p class="text-muted">Don't have an account? <a href="beneficiary_register.php">Register</a></p>
-          <p class="text-muted">Go back to <a href="../index.php">Home</a></p>
-        </form>
-      </div>
+        <p class="text-muted">Don't have an account? <a href="beneficiary_register.php">Register</a></p>
+        <p class="text-muted">Go back to <a href="../index.php">Home</a></p>
+      </form>
     </div>
   </div>
 </body>
