@@ -8,15 +8,18 @@ if (!isset($_SESSION["admin_id"])) {
 
 $admin_email = $_SESSION["admin_email"];
 
-require_once "../../data/config.php";  // this already creates $pdo
-
+require_once "../../data/config.php"; 
 try {
-    // Use the $pdo from your config.php directly, no need to recreate it here.
-    $stmt = $pdo->query("SELECT * FROM donations ORDER BY donation_date DESC");
+    $stmt = $pdo->prepare("
+        SELECT item_donations.*, donors.name AS donor_name 
+        FROM item_donations
+        JOIN donors ON item_donations.donor_id = donors.id
+        ORDER BY donation_date DESC
+    ");
+    $stmt->execute();
     $donations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    echo "Database query failed: " . htmlspecialchars($e->getMessage());
-    exit;
+    die("ERROR: Could not fetch donations. " . $e->getMessage());
 }
 ?>
 
@@ -27,21 +30,9 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Manage Donations - Admin Dashboard</title>
   <style>
-    /* your existing CSS here */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body, html {
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f2f5;
-    }
-    .layout {
-      display: flex;
-      height: 100vh;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; }
+    .layout { display: flex; height: 100vh; }
     .sidebar {
       width: 240px;
       background: #1e1e2f;
@@ -64,14 +55,14 @@ try {
       border-radius: 8px;
       transition: background 0.3s, transform 0.2s;
       font-size: 1rem;
+      display: block;
     }
-    .sidebar a:hover, .sidebar a.active {
+    .sidebar a:hover {
       background: #e53935;
       transform: translateX(5px);
     }
     .main {
       flex: 1;
-      padding: 0;
       display: flex;
       flex-direction: column;
     }
@@ -115,7 +106,7 @@ try {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .content h2 {
+    h2 {
       margin-bottom: 20px;
       color: #b71c1c;
       font-size: 2rem;
@@ -123,41 +114,48 @@ try {
     table {
       width: 100%;
       border-collapse: collapse;
-    }
-    table th, table td {
-      padding: 12px 15px;
-      border: 1px solid #ddd;
-      text-align: left;
       font-size: 1rem;
-      color: #333;
     }
-    table th {
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+      vertical-align: middle;
+    }
+    th {
       background-color: #e53935;
       color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
-    table tr:nth-child(even) {
-      background-color: #f9f9f9;
+    tr:hover {
+      background-color: #fce4e4;
     }
-    .no-data {
-      font-size: 1.2rem;
-      color: #999;
-      text-align: center;
-      padding: 40px 0;
+    .delete-btn {
+      padding: 6px 12px;
+      background-color: #c62828;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      background-color: #a81818;
     }
   </style>
 </head>
 <body>
-
 <div class="layout">
-  <!-- Sidebar -->
   <div class="sidebar">
     <h2>Admin Panel</h2>
+    <a href="admin_dashboard.php">Dashbaord</a>
     <a href="manage_users.php">Manage Users</a>
-    <a href="manage_donations.php" class="active">Manage Donations</a>
-    <a href="allocate_resources.php">Allocate Resources</a>
+    <a href="manage_donations.php">Manage Donations</a>
+
     <a href="generate_reports.php">Generate Reports</a>
-    <a href="schedule_events.php">Schedule Events</a>
-    <a href="track_inventory.php">Track Inventory</a>
+  
+   
   </div>
 
   <div class="main">
@@ -169,36 +167,45 @@ try {
     <div class="content">
       <h2>Manage Donations</h2>
 
-      <?php if (count($donations) > 0): ?>
+      <?php if (count($donations) === 0): ?>
+        <p>No donations found.</p>
+      <?php else: ?>
         <table>
           <thead>
             <tr>
               <th>ID</th>
               <th>Donor Name</th>
-              <th>Donation Amount</th>
+              <th>Item Type</th>
+              <th>Description</th>
+              <th>Quantity</th>
               <th>Donation Date</th>
-              <th>Notes</th>
+              <th>Created At</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($donations as $donation): ?>
               <tr>
-                <td><?php echo htmlspecialchars($donation['id']); ?></td>
-                <td><?php echo htmlspecialchars($donation['donor_name']); ?></td>
-                <td><?php echo htmlspecialchars(number_format($donation['amount'], 2)); ?></td>
-                <td><?php echo htmlspecialchars($donation['donation_date']); ?></td>
-                <td><?php echo htmlspecialchars($donation['notes']); ?></td>
+                <td><?= htmlspecialchars($donation['id']); ?></td>
+                <td><?= htmlspecialchars($donation['donor_name']); ?></td>
+                <td><?= htmlspecialchars($donation['item_type']); ?></td>
+                <td><?= htmlspecialchars($donation['description']); ?></td>
+                <td><?= htmlspecialchars($donation['quantity']); ?></td>
+                <td><?= htmlspecialchars($donation['donation_date']); ?></td>
+                <td><?= htmlspecialchars($donation['created_at']); ?></td>
+                <td>
+                  <form method="POST" action="delete_donation.php" onsubmit="return confirm('Are you sure you want to delete this donation?');">
+                    <input type="hidden" name="id" value="<?= $donation['id']; ?>">
+                    <button type="submit" class="delete-btn">Delete</button>
+                  </form>
+                </td>
               </tr>
             <?php endforeach; ?>
           </tbody>
         </table>
-      <?php else: ?>
-        <p class="no-data">No donations found.</p>
       <?php endif; ?>
-
     </div>
   </div>
 </div>
-
 </body>
 </html>

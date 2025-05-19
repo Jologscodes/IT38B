@@ -20,6 +20,28 @@ try {
     die("DB connection failed: " . $e->getMessage());
 }
 
+// Handle kick action
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['kick_id']) && isset($_POST['user_type'])) {
+    $kickId = intval($_POST['kick_id']);
+    $userType = $_POST['user_type'];
+
+    if ($userType === 'beneficiary') {
+        $stmtDel = $pdo->prepare("DELETE FROM beneficiaries WHERE id = ?");
+    } elseif ($userType === 'donor') {
+        $stmtDel = $pdo->prepare("DELETE FROM donors WHERE id = ?");
+    } else {
+        $stmtDel = null;
+    }
+
+    if ($stmtDel) {
+        $stmtDel->execute([$kickId]);
+        // Redirect to avoid resubmission
+        header("Location: manage_users.php");
+        exit;
+    }
+}
+
+// Fetch users
 $stmt = $pdo->query("SELECT id, email, name, created_at FROM beneficiaries ORDER BY created_at DESC");
 $beneficiaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -171,6 +193,19 @@ $donors = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       color: #888;
       padding: 10px 0;
     }
+    .kick-btn {
+    background-color: #e53935;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  .kick-btn:hover {
+    background-color: #b71c1c;
+  }
   </style>
 </head>
 <body>
@@ -178,12 +213,10 @@ $donors = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <div class="layout">
   <div class="sidebar">
     <h2>Admin Panel</h2>
+    <a href="admin_dashboard.php">Dashbaord</a>
     <a href="manage_users.php">Manage Users</a>
     <a href="manage_donations.php">Manage Donations</a>
-    <a href="allocate_resources.php">Allocate Resources</a>
     <a href="generate_reports.php">Generate Reports</a>
-    <a href="schedule_events.php">Schedule Events</a>
-    <a href="track_inventory.php">Track Inventory</a>
   </div>
 
   <div class="main">
@@ -202,6 +235,7 @@ $donors = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             <th>Email</th>
             <th>Name</th>
             <th>Joined At</th>
+            <th>Action</th> <!-- New Action column -->
           </tr>
         </thead>
         <tbody>
@@ -211,6 +245,13 @@ $donors = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             <td><?= htmlspecialchars($b['email']) ?></td>
             <td><?= htmlspecialchars($b['name'] ?? '-') ?></td>
             <td><?= htmlspecialchars($b['created_at']) ?></td>
+            <td>
+              <form method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to kick this beneficiary?');">
+                <input type="hidden" name="kick_id" value="<?= htmlspecialchars($b['id']) ?>">
+                <input type="hidden" name="user_type" value="beneficiary">
+                <button type="submit" class="kick-btn">Kick</button>
+              </form>
+            </td>
           </tr>
           <?php endforeach; ?>
         </tbody>
@@ -228,6 +269,7 @@ $donors = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             <th>Name</th>
             <th>Email</th>
             <th>Joined At</th>
+            <th>Action</th> <!-- New Action column -->
           </tr>
         </thead>
         <tbody>
@@ -237,6 +279,13 @@ $donors = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             <td><?= htmlspecialchars($d['name']) ?></td>
             <td><?= htmlspecialchars($d['email']) ?></td>
             <td><?= htmlspecialchars($d['created_at']) ?></td>
+            <td>
+              <form method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to kick this donor?');">
+                <input type="hidden" name="kick_id" value="<?= htmlspecialchars($d['id']) ?>">
+                <input type="hidden" name="user_type" value="donor">
+                <button type="submit" class="kick-btn">Kick</button>
+              </form>
+            </td>
           </tr>
           <?php endforeach; ?>
         </tbody>

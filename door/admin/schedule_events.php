@@ -226,12 +226,13 @@ try {
 <div class="layout">
   <div class="sidebar">
     <h2>Admin Panel</h2>
+    <a href="admin_dashboard.php">Dashbaord</a>
     <a href="manage_users.php">Manage Users</a>
     <a href="manage_donations.php">Manage Donations</a>
-    <a href="allocate_resources.php">Allocate Resources</a>
+
     <a href="generate_reports.php">Generate Reports</a>
-    <a href="schedule_events.php" style="background:#e53935;">Schedule Events</a>
-    <a href="track_inventory.php">Track Inventory</a>
+  
+   
   </div>
 
   <div class="main">

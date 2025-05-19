@@ -142,15 +142,16 @@ $admin_email = $_SESSION["admin_email"];
 <body>
 
 <div class="layout">
-  <!-- Sidebar -->
+
   <div class="sidebar">
     <h2>Admin Panel</h2>
+    <a href="admin_dashboard.php">Dashbaord</a>
     <a href="manage_users.php">Manage Users</a>
     <a href="manage_donations.php">Manage Donations</a>
-    <a href="allocate_resources.php">Allocate Resources</a>
+
     <a href="generate_reports.php">Generate Reports</a>
-    <a href="schedule_events.php">Schedule Events</a>
-    <a href="track_inventory.php">Track Inventory</a>
+  
+   
   </div>
 
   <div class="main">
@@ -158,14 +159,25 @@ $admin_email = $_SESSION["admin_email"];
       <h1>Simple Admin Dashboard</h1>
       <a href="../logout.php" class="logout-btn">Logout</a>
     </div>
-
     <div class="content">
-      <h2>Welcome, Admin! 🎉</h2>
-      <p>You are logged in as: <span class="highlight"><?php echo htmlspecialchars($admin_email); ?></span></p>
+  <h2>Generate Report</h2>
+  <p>Fill out the form below to create and send a report.</p>
 
-      <div class="welcome-msg">
-        Welcome back! Manage your system easily with the options on the left.
-      </div>
+  <form action="save_report.php" method="POST">
+    <label for="audience">Report For:</label><br>
+    <select name="audience" id="audience" required style="padding: 8px; margin: 10px 0; border-radius: 5px;">
+      <option value="donor">Donor</option>
+      <option value="beneficiary">Beneficiary</option>
+      <option value="all">All</option>
+    </select><br>
+
+    <label for="message">Message:</label><br>
+    <textarea name="message" id="message" rows="5" style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 8px;" required></textarea><br>
+
+    <button type="submit" style="margin-top: 15px; background: #e53935; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer;">Submit Report</button>
+  </form>
+</div>
+
     </div>
   </div>
 </div>
