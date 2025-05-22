@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../../data/config.php'; // Adjust path to your DB config file
+require '../../data/config.php'; 
 
 if (!isset($_SESSION['donor_id'])) {
     header("Location: donor_login.php");

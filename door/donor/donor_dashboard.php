@@ -1,17 +1,15 @@
 <?php
 session_start();
-require '../../data/config.php'; // Adjust path to your DB config file
+require '../../data/config.php'; 
 
-// Check if donor is logged in
 if (!isset($_SESSION['donor_id'])) {
-    header("Location: donor_login.php"); // redirect to login if not logged in
+    header("Location: donor_login.php"); 
     exit();
 }
 
 $donor_id = $_SESSION['donor_id'];
 $donor_name = $_SESSION['donor_name'] ?? 'Donor';
 
-// Fetch donations grouped by item type, using 'id' as primary key
 $sql = "SELECT id, item_type, description, quantity, photo, donation_date 
         FROM item_donations 
         WHERE donor_id = ? 
@@ -21,7 +19,6 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([$donor_id]);
 $donations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Group donations by item_type
 $groupedDonations = [];
 foreach ($donations as $donation) {
     $groupedDonations[$donation['item_type']][] = $donation;
@@ -95,7 +92,6 @@ foreach ($donations as $donation) {
                   <strong>Quantity:</strong> <?= (int)$donation['quantity'] ?><br>
                   <small>Donated on: <?= htmlspecialchars($donation['donation_date']) ?></small><br><br>
 
-                  <!-- Delete form -->
                   <form method="POST" action="delete_donation.php" onsubmit="return confirm('Are you sure you want to delete this donation?');">
                     <input type="hidden" name="donation_id" value="<?= (int)$donation['id'] ?>" />
                     <button type="submit" class="delete-btn" style="

@@ -42,130 +42,136 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Login - Nonprofit Resource Management</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    body, html {
-      height: 100%;
-      font-family: Arial, sans-serif;
-    }
+  body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
 
-    .background {
-      background-color: red;
-      height: 100vh;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-    }
+  .background {
+    background-color: #e0f2ff; 
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: white;
-    }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(0, 51, 102, 0.7); 
+    color: white;
+  }
 
-    .navbar-title {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
+  .navbar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 
-    .nav-buttons a {
-      text-decoration: none;
-      margin-left: 15px;
-    }
+  .nav-buttons a {
+    text-decoration: none;
+    margin-left: 15px;
+  }
 
-    .btn {
-      padding: 10px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      background-color: rgb(232, 32, 32);
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+  .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #0077cc; 
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
 
-    .btn:hover {
-      background-color: #218838;
-    }
+  .btn:hover {
+    background-color: #005fa3;
+  }
 
-    .content {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  .content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .login-box {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-    }
+  .login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
 
-    .login-box h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: red;
-    }
+  .login-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #005fa3;
+  }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
+  .form-group {
+    margin-bottom: 15px;
+  }
 
-    .form-group label {
-      display: block;
-      font-weight: bold;
-    }
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    color: #005fa3;
+  }
 
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
 
-    .form-group span {
-      color: red;
-      font-size: 0.9em;
-    }
+  .form-group span {
+    color: #005fa3;
+    font-size: 0.9em;
+  }
 
-    .login-box .btn-submit {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      background: red;
-      color: white;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+  .login-box .btn-submit {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #0077cc;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
 
-    .login-box .btn-submit:hover {
-      background-color: #b30000;
-    }
+  .login-box .btn-submit:hover {
+    background-color: #005fa3;
+  }
 
-    .text-muted {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
-    }
+  .text-muted {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+  }
 
-    .text-muted a {
-      color: red;
-    }
+  .text-muted a {
+    color: #005fa3;
+    text-decoration: none;
+  }
 
-  </style>
+  .text-muted a:hover {
+    text-decoration: underline;
+  }
+</style>
+
 </head>
 <body>
   <div class="background">
@@ -181,7 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="content">
   <div style="display: flex; align-items: center; gap: 60px; flex-wrap: wrap; justify-content: center;">
     
-    <img src="../image/bg.jpg" alt="Admin Image" 
+    <img src="../image/8620f2_b3b5145a6e3843c4a663bb57a0a785da~mv2.png" alt="Admin Image" 
       style="
         width: 500px; 
         height: 500px; 

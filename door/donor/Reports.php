@@ -2,7 +2,6 @@
 session_start();
 require '../../data/config.php';
 
-// Check if donor is logged in
 if (!isset($_SESSION['donor_id'])) {
     header("Location: donor_login.php");
     exit();
@@ -11,19 +10,17 @@ if (!isset($_SESSION['donor_id'])) {
 $donor_id = $_SESSION['donor_id'];
 $donor_name = $_SESSION['donor_name'] ?? 'Donor';
 
-// Handle marking report as read
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['report_id'])) {
     $report_id = (int) $_POST['report_id'];
-    // Insert read record if not exists
+
     $sqlInsert = "INSERT IGNORE INTO report_reads (report_id, donor_id) VALUES (:report_id, :donor_id)";
     $stmtInsert = $pdo->prepare($sqlInsert);
     $stmtInsert->execute(['report_id' => $report_id, 'donor_id' => $donor_id]);
-    // Redirect to avoid form resubmission
+   
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
 
-// Fetch reports and whether donor has read them
 $sql = "
 SELECT 
     r.id, r.audience, r.message, r.created_at, a.email AS admin_name,

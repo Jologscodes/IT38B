@@ -43,154 +43,157 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Beneficiary Login - Nonprofit Resource Management</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    body, html {
-      height: 100%;
-      font-family: Arial, sans-serif;
-    }
+  body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
 
-    .background {
-      background-color: red; 
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+  .background {
+    background-color: #e0f0ff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: white;
-    }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(0, 51, 102, 0.85);
+    color: white;
+  }
 
-    .navbar-title {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
+  .navbar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 
-    .nav-buttons a {
-      text-decoration: none;
-      margin-left: 15px;
-    }
+  .nav-buttons a {
+    text-decoration: none;
+    margin-left: 15px;
+  }
 
-    .btn {
-      padding: 10px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      background-color: #cc0000;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+  .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #0077cc;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
 
-    .btn:hover {
-      background-color: #800000;
-    }
+  .btn:hover {
+    background-color: #005fa3;
+  }
 
-    .content {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  .content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .login-box {
-        background: white;
-  padding: 30px;
-  border-radius: 10px;
-  width: 320px; 
-  max-width: none; 
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  z-index: 2;
-  position: relative; 
-    }
+  .login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 320px;
+    max-width: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    position: relative;
+  }
 
-    .login-box h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #b30000;
-    }
+  .login-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #005fa3;
+  }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
+  .form-group {
+    margin-bottom: 15px;
+  }
 
-    .form-group label {
-      display: block;
-      font-weight: bold;
-      color: #b30000;
-    }
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    color: #005fa3;
+  }
 
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
 
-    .error-msg {
-      color: #b30000;
-      margin-bottom: 15px;
-      text-align: center;
-      font-weight: bold;
-    }
+  .error-msg {
+    color: #003366; 
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+  }
 
-    .btn-submit {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      background: #b30000;
-      color: white;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: background-color 0.3s;
-    }
+  .btn-submit {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #0077cc;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+  }
 
-    .btn-submit:hover {
-      background-color: #800000;
-    }
+  .btn-submit:hover {
+    background-color: #005fa3;
+  }
 
-    .text-muted {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
-    }
+  .text-muted {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+  }
 
-    .text-muted a {
-      color: #b30000;
-      text-decoration: none;
-    }
-    .text-muted a:hover {
-      text-decoration: underline;
-    }
-    .side-by-side {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 60px;
-  padding: 2rem;
-}
-.login-image {
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-  flex-shrink: 0;
-}
+  .text-muted a {
+    color: #005fa3;
+    text-decoration: none;
+  }
 
-  </style>
+  .text-muted a:hover {
+    text-decoration: underline;
+  }
+
+  .side-by-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    padding: 2rem;
+  }
+
+  .login-image {
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+    flex-shrink: 0;
+  }
+</style>
+
 </head>
 <body>
   <div class="background">
@@ -205,7 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="content">
     <div class="side-by-side">
-  <img src="../image/bg.jpg" alt="Beneficiary Image" class="login-image">
+  <img src="../image/8620f2_b3b5145a6e3843c4a663bb57a0a785da~mv2.png" alt="Beneficiary Image" class="login-image">
 
       <form class="login-box" action="beneficiary_login.php" method="post" novalidate>
         <h2>Beneficiary Login</h2>
